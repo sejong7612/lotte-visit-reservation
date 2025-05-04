@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>롯데캐슬 방문 예약</title>
+  <style>
+    :root {
+      --primary-color: #b79558;
+      --accent-color: #c3a574;
+      --secondary-color: #2c2a29;
+      --background-color: #f4f1ec;
+      --form-background: #ffffff;
+      --text-color: #2c2a29;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Noto Sans KR', sans-serif;
+      background-color: var(--background-color);
+      color: var(--text-color);
+      line-height: 1.6;
+    }
+
+    header {
+      background-color: var(--secondary-color);
+      color: var(--primary-color);
+      text-align: center;
+      padding: 0;
+    }
+
+    header img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    header h1 {
+      margin: 0;
+      padding: 20px;
+      font-size: 1.8em;
+      animation: slideDown 1s ease-out;
+    }
+
+    main {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    .form-container {
+      background-color: var(--form-background);
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+      padding: 40px;
+      animation: fadeInUp 1.5s ease-in-out;
+    }
+
+    h2 {
+      text-align: center;
+      color: var(--primary-color);
+      margin-top: 0;
+    }
+
+    label {
+      display: block;
+      margin: 20px 0 8px;
+      font-weight: bold;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 1em;
+      transition: box-shadow 0.3s ease;
+    }
+
+    input:focus,
+    textarea:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 10px rgba(183, 149, 88, 0.3);
+    }
+
+    button {
+      display: block;
+      width: 100%;
+      margin-top: 30px;
+      padding: 16px;
+      background-color: var(--primary-color);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.1em;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    button:hover {
+      background-color: var(--accent-color);
+      transform: translateY(-2px);
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background-color: #eae7e2;
+      color: #777;
+      font-size: 0.9em;
+      margin-top: 60px;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideDown {
+      from { transform: translateY(-30px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/1/14/Lotte_Castle_logo.png" alt="롯데캐슬 배너 이미지">
+    <h1>중앙공원 롯데캐슬 시그니처 방문예약</h1>
+  </header>
+
+  <main>
+    <div class="form-container">
+      <h2>방문 예약 신청</h2>
+      <p style="text-align:center;">방문을 원하시는 분은 아래 양식을 작성해 주세요.<br>확인 후 빠르게 연락드리겠습니다.</p>
+      <form id="visitForm">
+        <label for="name">이름</label>
+        <input type="text" id="name" name="name" required />
+
+        <label for="phone">연락처</label>
+        <input type="tel" id="phone" name="phone" placeholder="01012345678" required />
+
+        <label for="purpose">문의 사항</label>
+        <textarea id="purpose" name="purpose" rows="4" required></textarea>
+
+        <button type="submit">예약하기</button>
+      </form>
+    </div>
+  </main>
+
+  <footer>
+    &copy; 2025 우리 회사. All rights reserved.
+  </footer>
+
+  <!-- EmailJS 라이브러리 -->
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <script>
+    emailjs.init("evBhmjxKVEWcTNqx4");
+
+    document.getElementById('visitForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      emailjs.send("service_1u06ylc", "template_0f6hcrd", {
+        name: document.getElementById("name").value,
+        phone: document.getElementById("phone").value,
+        purpose: document.getElementById("purpose").value
+      }).then(function(response) {
+        alert("예약이 완료되었습니다!");
+        document.getElementById("visitForm").reset();
+      }, function(error) {
+        alert("오류가 발생했습니다. 다시 시도해주세요.");
+      });
+    });
+  </script>
+</body>
+</html>
